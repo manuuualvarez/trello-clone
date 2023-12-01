@@ -15,6 +15,7 @@ const OrganizationIdPage = async () => {
         {/* <Suspense fallback={<BoardList.Skeleton />}>
           <BoardList />
         </Suspense> */}
+        Organization Page
       </div>
     </div>
   );
