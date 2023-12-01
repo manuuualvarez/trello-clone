@@ -10,7 +10,7 @@ export const OrgControl = () => {
 
   useEffect(() => {
     if (!setActive) return;
-
+    // Only set the active organization if the organization ID in the URL
     setActive({
       organization: params.organizationId as string,
     });
