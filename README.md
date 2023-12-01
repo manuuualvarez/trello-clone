@@ -28,6 +28,8 @@ Existe una carpeta config (.gitignore)
 - Lucide react
 - npx shadcn-ui@latest
 - npx shadcn-ui@latest add skeleton
+- npx shadcn-ui@latest add sheet (mobile sidebar)
+- npm i zustand (mobile sidebar)
 
 ## Need:
 - Logo as .svg
