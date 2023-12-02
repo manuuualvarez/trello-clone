@@ -1,4 +1,8 @@
+
+
 // import { Suspense } from "react";
+
+import { db } from "@/lib/db";
 
 
 
@@ -7,7 +11,18 @@
 
 
 const OrganizationIdPage = async () => {
-  
+  async function create(formData: FormData) {
+    "use server"
+    const title = formData.get("title") as string;
+
+    const data = await db.board.create({
+      data: {
+        title
+      }
+    })
+
+    console.log(data)
+  }
 
   return (
     <div className="w-full mb-20">
@@ -15,7 +30,16 @@ const OrganizationIdPage = async () => {
         {/* <Suspense fallback={<BoardList.Skeleton />}>
           <BoardList />
         </Suspense> */}
-        Organization Page
+        <form action= { create }>
+          <input
+            id="title"
+            name="title"
+            required
+            placeholder="Enter a board title"
+            className="border-input border p-1"
+          >
+          </input>
+        </form>
       </div>
     </div>
   );
