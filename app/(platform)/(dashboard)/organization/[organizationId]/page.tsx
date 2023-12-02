@@ -1,36 +1,20 @@
 
 
 // import { Suspense } from "react";
-
-import { db } from "@/lib/db";
-
-
-
 // import { Info } from "./_components/info";
 // import { BoardList } from "./_components/board-list";
 
+import { createBoard } from "@/actions/create-board";
+import { Button } from "@/components/ui/button";
+import { db } from "@/lib/db";
+import { Board } from "./board";
 
 const OrganizationIdPage = async () => {
-  async function create(formData: FormData) {
-    "use server"
-    const title = formData.get("title") as string;
-
-    const data = await db.board.create({
-      data: {
-        title
-      }
-    })
-
-    console.log(data)
-  }
+  const board = await db.board.findMany();
 
   return (
-    <div className="w-full mb-20">
-      <div className="px-2 md:px-4">
-        {/* <Suspense fallback={<BoardList.Skeleton />}>
-          <BoardList />
-        </Suspense> */}
-        <form action= { create }>
+    <div className="flex flex-col space-y-4">
+        <form action= { createBoard }>
           <input
             id="title"
             name="title"
@@ -39,8 +23,24 @@ const OrganizationIdPage = async () => {
             className="border-input border p-1"
           >
           </input>
+
+          <Button
+            type="submit"
+          >
+            Create Board
+          </Button>
         </form>
-      </div>
+        <div className="space-y-2">
+            {
+              board.map((board) => (
+                <Board 
+                  key={ board.id }
+                  title= { board.title } 
+                  id = { board.id } 
+                />
+              ))
+            }
+        </div>
     </div>
   );
 };
