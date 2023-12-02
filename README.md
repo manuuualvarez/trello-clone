@@ -47,6 +47,7 @@ Existe una carpeta config (.gitignore)
 - npx shadcn-ui@latest
 - npx shadcn-ui@latest add skeleton
 - npx shadcn-ui@latest add sheet (mobile sidebar)
+- npx shadcn-ui@latest add input (handle inputs)
 - npm i zustand (mobile sidebar)
 
 // One Prisma install, check:
