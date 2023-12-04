@@ -26,13 +26,9 @@ export const useAction = <TInput, TOutput> (
             try {
                 const result = await action(input);
                 // We do not receive any result
-                if (!result) {
-                    return
-                } 
-                // The request has an invalid input
-                if( result.fieldErrors) {
-                    setfieldErrors(result.fieldErrors);
-                }
+                if (!result) return;
+                // The request has an invalid input or null
+                setfieldErrors(result.fieldErrors);
                 // The servers response with error
                 if (result.error) {
                     setError(result.error);
