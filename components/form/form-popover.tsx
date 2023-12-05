@@ -9,6 +9,8 @@ import { Button } from "../ui/button"
 import { X } from "lucide-react"
 import { toast } from "sonner"
 import { FormPicker } from "./form-picker"
+import { ElementRef, useRef } from "react"
+import { useRouter } from "next/navigation"
 
 interface FormPopoverProps {
     children: React.ReactNode;
@@ -18,25 +20,31 @@ interface FormPopoverProps {
 }
 
 export const FormPopover = ({ sideOffset = 0, side = "bottom", children, align }: FormPopoverProps) => {
+    // Take a reference to the form status, to close the popover on submit
+    const closeRef = useRef<ElementRef<"button">>(null)
+    //  Handle routes
+    const router = useRouter();
+
     const { execute, fieldErrors } = useAction(createBoard, {
         onSuccess(data) {
             toast.success("Board created")
+            closeRef.current?.click()
+            router.push(`/board/${data.id}`)
         },
         onError(error) {
             toast.error(error)
         }
-    })
+    });
     const onSubmit = (formData: FormData) => {
         const title = formData.get("title") as string;
         const image = formData.get("image") as string;
-    
         execute({ title, image });
-      }
+    };
 
     return(
         <Popover>
             <PopoverTrigger asChild>
-            {children}
+                { children }
             </PopoverTrigger>
             <PopoverContent
                 align={align}
@@ -47,7 +55,7 @@ export const FormPopover = ({ sideOffset = 0, side = "bottom", children, align }
                 <div className="text-sm font-medium text-center text-neutral-600 pb-4">
                     Create board
                 </div>
-                <PoperverClose  asChild>
+                <PoperverClose ref={ closeRef } asChild>
                     <Button
                     className="h-auto w-auto p-2 absolute top-2 right-2 text-neutral-600"
                     variant="ghost"
@@ -68,7 +76,7 @@ export const FormPopover = ({ sideOffset = 0, side = "bottom", children, align }
                         errors={fieldErrors}
                     />
                     </div>
-                    <FormSubmit className="w-full">
+                    <FormSubmit className="w-full" variant="primary">
                     Create
                     </FormSubmit>
                 </form>
